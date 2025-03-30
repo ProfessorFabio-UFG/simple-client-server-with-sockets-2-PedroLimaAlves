@@ -15,15 +15,16 @@ Após receber a resposta, o cliente encerra a conexão TCP com o servidor.
 
 
 Código Servidor – servidor.py
-import socket
 
-def handle_client(conn):
-    data = conn.recv(1024).decode()
-    if not data:
-        return
-    try:
-        op, num1, num2 = data.split()
-        num1, num2 = float(num1), float(num2)
+    import socket
+    
+    def handle_client(conn):
+        data = conn.recv(1024).decode()
+        if not data:
+            return
+        try:
+            op, num1, num2 = data.split()
+            num1, num2 = float(num1), float(num2)
 
         if op == "add":
             result = num1 + num2
@@ -41,29 +42,30 @@ def handle_client(conn):
     except Exception as e:
         conn.send(f"Erro: {e}".encode())
 
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(("0.0.0.0", 5678))
-server.listen(1)
-print("Servidor aguardando conexões...")
-
-while True:
-    conn, addr = server.accept()
-    handle_client(conn)
-    conn.close()
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(("0.0.0.0", 5678))
+    server.listen(1)
+    print("Servidor aguardando conexões...")
+    
+    while True:
+        conn, addr = server.accept()
+        handle_client(conn)
+        conn.close()
 Código Cliente – cliente.py
-import socket
-
-server_ip = input("Digite o IP do servidor: ")
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect((server_ip, 5678))
-
-op = input("Digite a operação (add, subtract, multiply, divide): ")
-num1 = input("Digite o primeiro número: ")
-num2 = input("Digite o segundo número: ")
-
-client.send(f"{op} {num1} {num2}".encode())
-
-result = client.recv(1024).decode()
-print("Resultado:", result)
-
-client.close()
+        
+        import socket
+        
+        server_ip = input("Digite o IP do servidor: ")
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client.connect((server_ip, 5678))
+        
+        op = input("Digite a operação (add, subtract, multiply, divide): ")
+        num1 = input("Digite o primeiro número: ")
+        num2 = input("Digite o segundo número: ")
+        
+        client.send(f"{op} {num1} {num2}".encode())
+        
+        result = client.recv(1024).decode()
+        print("Resultado:", result)
+        
+        client.close()
