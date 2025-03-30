@@ -12,6 +12,16 @@ O cliente envia dados ao servidor, como dois números e o tipo de operação que
 O cliente recebe a resposta do servidor através da conexão TCP e exibe o resultado da operação no terminal.
 Após receber a resposta, o cliente encerra a conexão TCP com o servidor.
 
+O servidor oferece as seguintes operações:
+
+Soma (add): Retorna a soma de dois números.
+
+Subtração (subtract): Retorna a diferença entre dois números.
+
+Multiplicação (multiply): Retorna o produto de dois números.
+
+Divisão (divide): Retorna o quociente de dois números (evitando divisão por zero).
+
 
 
 Código Servidor – servidor.py
